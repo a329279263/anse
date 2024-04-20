@@ -25,7 +25,7 @@ export default (props: Props) => {
       key: 'locale',
       name: t('settings.general.locale'),
       type: 'select',
-      default: 'en',
+      default: 'zhCN',
       options: localesOptions,
     },
   ] as SettingsUI[])
