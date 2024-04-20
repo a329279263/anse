@@ -43,7 +43,7 @@ const providerZhiPuAI = () => {
         type: 'slider',
         min: 0,
         max: 8192,
-        default: 1024,
+        default: 8192,
         step: 1,
       },
       {
@@ -52,8 +52,8 @@ const providerZhiPuAI = () => {
         description: '如果消息长度超过 MaxToken 参数，则保留的历史消息数量将被截断.',
         type: 'slider',
         min: 1,
-        max: 24,
-        default: 5,
+        max: 20,
+        default: 10,
         step: 1,
       },
       {
