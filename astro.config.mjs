@@ -17,6 +17,7 @@ const envAdapter = () => {
 
 // https://astro.build/config
 export default defineConfig({
+  // 本地运行的时候好像要注释
   base: '/anse',
   integrations: [
     unocss(),
@@ -61,11 +62,9 @@ export default defineConfig({
   output: 'server',
   adapter: envAdapter(),
   server: {
-    base: '/anse',
     host: '0.0.0.0',
   },
   vite: {
-    base: '/anse',
     plugins: [
       process.env.OUTPUT === 'vercel' && disableBlocks(),
       process.env.OUTPUT === 'netlify' && disableBlocks(),

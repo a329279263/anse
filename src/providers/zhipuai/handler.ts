@@ -1,7 +1,7 @@
 import { fetchChatCompletion, fetchImageGeneration } from './api'
 import { parseStream } from './parser'
 import type { Message } from '@/types/message'
-import type { HandlerPayload, Provider } from '@/types/provider'
+import type { HandlerPayload, Provider, SettingsPayload } from '@/types/provider'
 
 export const handlePrompt: Provider['handlePrompt'] = async(payload, signal?: AbortSignal) => {
   if (payload.botId === 'chat_continuous')
@@ -35,6 +35,13 @@ export const handleRapidPrompt: Provider['handleRapidPrompt'] = async(prompt, gl
   return ''
 }
 
+const API_KEY_ENV_VAR = 'PUBLIC_ZHIPUAPI_API_KEY'
+
+const getApiKey = (globalSettings: SettingsPayload) => {
+  // 如果 globalSettings 中有 apiKey，使用它；否则，使用环境变量中的值。
+  return (globalSettings.apiKey || import.meta.env[API_KEY_ENV_VAR]) as string
+}
+
 const handleChatCompletion = async(payload: HandlerPayload, signal?: AbortSignal) => {
   // An array to store the chat messages
   const messages: Message[] = []
@@ -56,9 +63,8 @@ const handleChatCompletion = async(payload: HandlerPayload, signal?: AbortSignal
     maxTokens -= m.content.length
     messages.unshift(m)
   }
-
   const response = await fetchChatCompletion({
-    apiKey: payload.globalSettings.apiKey as string,
+    apiKey: getApiKey(payload.globalSettings),
     baseUrl: (payload.globalSettings.baseUrl as string).trim().replace(/\/$/, ''),
     body: {
       messages,
@@ -88,7 +94,7 @@ const handleChatCompletion = async(payload: HandlerPayload, signal?: AbortSignal
 const handleImageGeneration = async(payload: HandlerPayload) => {
   const prompt = payload.prompt
   const response = await fetchImageGeneration({
-    apiKey: payload.globalSettings.apiKey as string,
+    apiKey: getApiKey(payload.globalSettings),
     baseUrl: (payload.globalSettings.baseUrl as string).trim().replace(/\/$/, ''),
     body: {
       prompt,
