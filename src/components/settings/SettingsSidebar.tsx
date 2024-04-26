@@ -43,7 +43,7 @@ export default () => {
             {t('docs')}
           </a>
           <span class="px-1"> · </span>
-          <a href="https://github.com/anse-app/anse" target="_blank" rel="noreferrer" class="hv-foreground">
+          <a href="https://github.com/a329279263/anse/" target="_blank" rel="noreferrer" class="hv-foreground">
             {t('github')}
           </a>
         </div>
