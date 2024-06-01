@@ -63,7 +63,7 @@ export const zhCN = {
         },
       },
     },
-    docs: '文档',
+    docs: '甜蜜归家',
     github: '源码',
     scroll: '滚动到底部',
     empty: '暂无数据',
