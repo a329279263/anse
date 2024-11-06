@@ -29,6 +29,7 @@ const providerZhiPuAI = () => {
         type: 'select',
         options: [
           // 根据输入的自然语言指令完成多种语言类任务，推荐使用 SSE 或异步调用方式请求接口
+          { value: 'GLM-4-Plus', label: 'GLM-4-Plus' },
           { value: 'GLM-4', label: 'GLM-4' },
           // 根据输入的自然语言指令和图像信息完成任务，推荐使用 SSE 或同步调用方式请求接口 2k tokens 上下文
           { value: 'GLM-4V', label: 'GLM-4V' },
