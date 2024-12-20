@@ -1,5 +1,6 @@
 FROM node:alpine
 WORKDIR /usr/src
+RUN npm config set registry https://registry.npmmirror.com
 RUN npm install -g pnpm
 COPY package.json ./
 RUN pnpm install
