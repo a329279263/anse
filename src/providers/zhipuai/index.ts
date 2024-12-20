@@ -43,7 +43,7 @@ const providerZhiPuAI = () => {
         description: '如果消息长度超过 MaxToken 参数，则保留的历史消息数量将被截断.',
         type: 'slider',
         min: 1,
-        max: 20,
+        max: 100,
         default: 10,
         step: 1,
       },

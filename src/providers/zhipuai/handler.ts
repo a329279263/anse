@@ -21,7 +21,7 @@ export const handleRapidPrompt: Provider['handleRapidPrompt'] = async(prompt, gl
       ...globalSettings,
       model: 'GLM-4',
       temperature: 0.4,
-      maxTokens: 2048,
+      maxTokens: 16384,
       top_p: 0.7,
       stream: false,
     },
