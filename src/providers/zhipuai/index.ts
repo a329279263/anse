@@ -38,6 +38,16 @@ const providerZhiPuAI = () => {
         default: 'GLM-4',
       },
       {
+        key: 'maxTokens',
+        name: 'MaxToken',
+        description: '模型输出最大 tokens.',
+        type: 'slider',
+        min: 0,
+        max: 999999,
+        default: 20480,
+        step: 1,
+      },
+      {
         key: 'messageHistorySize',
         name: '最大历史消息大小',
         description: '如果消息长度超过 MaxToken 参数，则保留的历史消息数量将被截断.',

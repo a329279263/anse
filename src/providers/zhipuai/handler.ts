@@ -68,7 +68,7 @@ const handleChatCompletion = async(payload: HandlerPayload, signal?: AbortSignal
     baseUrl: (payload.globalSettings.baseUrl as string).trim().replace(/\/$/, ''),
     body: {
       messages,
-      // max_tokens: maxTokens,
+      max_tokens: maxTokens,
       model: payload.globalSettings.model as string,
       temperature: payload.globalSettings.temperature as number,
       top_p: payload.globalSettings.topP as number,
