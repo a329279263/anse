@@ -1,14 +1,21 @@
 import destr from 'destr'
+import { createEffect } from 'solid-js'
+import { useStore } from '@nanostores/solid'
 import { getBotMetaById, getProviderById } from '@/stores/provider'
-import { updateConversationById } from '@/stores/conversation'
+import { currentConversationId, hasFetchedSuggestionsForCurrentConv, updateConversationById } from '@/stores/conversation'
 import { clearMessagesByConversationId, getMessagesByConversationId, pushMessageByConversationId } from '@/stores/messages'
 import { getGeneralSettings, getSettingsByProviderId } from '@/stores/settings'
-import { setLoadingStateByConversationId, setStreamByConversationId } from '@/stores/streams'
-import { currentErrorMessage } from '@/stores/ui'
+import { loadingStateMap, setLoadingStateByConversationId, setStreamByConversationId, streamsMap } from '@/stores/streams'
+import { currentErrorMessage, promptSuggestions } from '@/stores/ui'
 import { generateRapidProviderPayload, promptHelper } from './helper'
-import type { HandlerPayload, PromptResponse } from '@/types/provider'
+import type { HandlerPayload, PromptResponse, SuggestPayload } from '@/types/provider'
 import type { Conversation } from '@/types/conversation'
 import type { ErrorMessage, Message } from '@/types/message'
+const $currentConversationId = useStore(currentConversationId)
+const $streamsMap = useStore(streamsMap)
+const $loadingStateMap = useStore(loadingStateMap)
+const isStreaming = () => !!$streamsMap()[$currentConversationId()]
+const isLoading = () => !!$loadingStateMap()[$currentConversationId()]
 
 export const handlePrompt = async(conversation: Conversation, prompt?: string, signal?: AbortSignal) => {
   const generalSettings = getGeneralSettings()

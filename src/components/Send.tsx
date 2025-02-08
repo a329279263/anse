@@ -1,13 +1,14 @@
-import { Match, Switch, createSignal, onMount } from 'solid-js'
+import { Match, Show, Switch, createSignal, onMount } from 'solid-js'
 import { useStore } from '@nanostores/solid'
 import { createShortcut } from '@solid-primitives/keyboard'
-import { currentErrorMessage, isSendBoxFocus, scrollController } from '@/stores/ui'
+import { currentErrorMessage, isSendBoxFocus, promptSuggestions, scrollController } from '@/stores/ui'
 import { addConversation, conversationMap, currentConversationId } from '@/stores/conversation'
 import { loadingStateMap, streamsMap } from '@/stores/streams'
 import { handlePrompt } from '@/logics/conversation'
 import { globalAbortController } from '@/stores/settings'
 import { useI18n } from '@/hooks'
 import Button from './ui/Button'
+import Suggest from './Suggest'
 
 export default () => {
   const { t } = useI18n()
@@ -19,6 +20,7 @@ export default () => {
   const $streamsMap = useStore(streamsMap)
   const $loadingStateMap = useStore(loadingStateMap)
   const $globalAbortController = useStore(globalAbortController)
+  const $promptSuggestions = useStore(promptSuggestions)
 
   const [inputPrompt, setInputPrompt] = createSignal('')
   const isEditing = () => inputPrompt() || $isSendBoxFocus()
@@ -45,15 +47,30 @@ export default () => {
       return 'normal'
   }
 
+  const PromptSuggestion = () => {
+    // 确保在 inputRef 被赋值后再传递给 Suggest 组件
+    if (inputRef) {
+      return (
+        <Suggest setInputPrompt={setInputPrompt} inputRef={inputRef} />
+      )
+    }
+    return null // 或者返回一个加载中的状态
+  }
+
   const EmptyState = () => (
     <div
-      class="max-w-base h-full fi flex-row gap-2"
-      onClick={() => {
-        isSendBoxFocus.set(true)
-        inputRef.focus()
-      }}
+      class="absolute bottom-0 left-0 right-0 border-t border-base bg-blur hv-base"
     >
-      <div class="flex-1 op-30 text-sm">{t('send.placeholder')}</div>
+      <PromptSuggestion />
+      <div
+        onClick={() => {
+          isSendBoxFocus.set(true)
+          inputRef.focus()
+        }}
+        class="max-w-base h-full fi flex-row gap-2"
+      >
+        <div class="flex-1 op-30 text-sm">{t('send.placeholder')}</div>
+      </div>
     </div>
   )
 

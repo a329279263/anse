@@ -11,6 +11,8 @@ export const showSelectMessageModal = atom(false)
 
 export const isSendBoxFocus = atom(false)
 export const currentErrorMessage = atom<ErrorMessage | null>(null)
+export const promptSuggestions = atom<Array<string> | []>([])
+
 export const emojiPickerCurrentPick = atom<string | undefined>()
 
 export const scrollController = () => {

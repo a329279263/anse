@@ -2,7 +2,6 @@ import { Match, Switch, createEffect } from 'solid-js'
 import { useStore } from '@nanostores/solid'
 import { conversationMap, currentConversationId } from '@/stores/conversation'
 import { conversationMessagesMap } from '@/stores/messages'
-import { loadingStateMap, streamsMap } from '@/stores/streams'
 import { getBotMetaById } from '@/stores/provider'
 import { useI18n } from '@/hooks'
 import ConversationEmpty from './ConversationEmpty'
@@ -16,8 +15,6 @@ export default () => {
   const $conversationMap = useStore(conversationMap)
   const $conversationMessagesMap = useStore(conversationMessagesMap)
   const $currentConversationId = useStore(currentConversationId)
-  const $streamsMap = useStore(streamsMap)
-  const $loadingStateMap = useStore(loadingStateMap)
 
   const currentConversation = () => {
     return $conversationMap()[$currentConversationId()]

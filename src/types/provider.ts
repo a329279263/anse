@@ -37,6 +37,10 @@ export interface HandlerPayload {
   prompt?: string
   messages: Message[]
 }
+export interface SuggestPayload {
+  model?: string
+  messages: Message[]
+}
 
 export type PromptResponse = string | ReadableStream | null | undefined
 

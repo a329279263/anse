@@ -7,6 +7,7 @@ import type { Conversation } from '@/types/conversation'
 
 export const conversationMap = map<Record<string, Conversation>>({})
 export const currentConversationId = atom('')
+export const hasFetchedSuggestionsForCurrentConv = atom(false)
 export const currentConversation = computed(currentConversationId, (id) => {
   return id ? conversationMap.get()[id] as Conversation : null
 })
